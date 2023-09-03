@@ -121,15 +121,18 @@
   animation appear 1s cubic-bezier(.82,0,.12,1)
 
 .panelFilterAccount
-  position sticky
-  top 0px
-  left 0px
-  right 0px
+  // position sticky
+  // top 0px
+  // left 0px
+  // right 0px
+  pointer-events auto
+  position relative
   height 48px
-  width 100%
-  z-index 99
+  width calc(100% - 16px)
+  z-index 99999999
   overflow hidden
   animation appear 1s cubic-bezier(.82,0,.12,1)
+  margin: 0px 8px
 
 .panelFilterIcon
   position absolute

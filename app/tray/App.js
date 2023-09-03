@@ -4,7 +4,6 @@ import link from '../../resources/link'
 
 import Account from './Account'
 import Notify from './Notify'
-import Menu from './Menu'
 import { Header } from './Header'
 import Badge from './Badge'
 

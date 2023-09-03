@@ -3,7 +3,7 @@
 // import link from '../../../resources/link'
 // import svg from '../../../resources/svg'
 
-// import styled from 'styled-components'
+import styled from 'styled-components'
 
 // import { Cluster, ClusterRow, ClusterColumn, ClusterValue } from '../../../resources/Components/Cluster'
 
@@ -88,7 +88,7 @@
 
 // export default Restore.connect(Command)
 
-import React from 'react'
+import React, { useState } from 'react'
 import Restore from 'react-restore'
 import link from '../../link'
 import svg from '../../svg'
@@ -127,6 +127,48 @@ const Button = ({ id, glitch, onClick, setGlitch, active, children }) => {
         </Glitch>
       </div>
     </ClusterValue>
+  )
+}
+
+import React, { useState } from 'react'
+
+const glitch = (el, on) => {
+  return (
+    <div className={on ? 'glitch glitchOn' : 'glitch'}>
+      {[...Array(10).keys()].map((i) => (
+        <div key={i + 'hg'} className='line'>
+          {el}
+        </div>
+      ))}
+      {!on ? <div className='line lastLine'>{el}</div> : null}
+    </div>
+  )
+}
+
+const MenuButtonWrap = styled.div`
+  position: relative;
+  height: 48px;
+  width: calc(100% / 5);
+  cursor: pointer;
+  * {
+    pointer-events: none;
+  }
+`
+
+const MenuButton = ({ space = 'command', svg, data = {}, views = [] }) => {
+  const [glitchOnSidebar, setGlitchOnSidebar] = useState(false)
+  return (
+    <MenuButtonWrap
+      onClick={() => {
+        setGlitchOnSidebar(false)
+        link.send('workspace:run', space, data, views)
+      }}
+      onMouseEnter={() => setGlitchOnSidebar(true)}
+      onMouseOver={() => setGlitchOnSidebar(true)}
+      onMouseLeave={() => setGlitchOnSidebar(false)}
+    >
+      <div style={{ width: '60px', height: '100%' }}>{glitch(svg, glitchOnSidebar)}</div>
+    </MenuButtonWrap>
   )
 }
 
@@ -226,71 +268,18 @@ class Menu extends React.Component {
       const accountManagerActive = crumb.view === 'accountManager'
       return (
         <PanelMenu>
-          <Cluster>
+          <MenuButton space='command' svg={svg.window(15)} />
+          <MenuButton space='accounts' svg={svg.accounts(16)} />
+          <MenuButton space='chains' svg={svg.chain(18)} />
+          <MenuButton space='settings' svg={svg.settings(16)} />
+          <MenuButton space='dapp' views={['send.frame.eth']} svg={svg.send(16)} />
+          {/* <Cluster>
             <ClusterRow>
-              <ClusterValue
-                width={60}
-                onClick={() => {
-                  this.setState({ glitchOnSidebar: false })
-                  link.send('tray:action', 'setDash', {
-                    showing: !this.store('windows.dash.showing')
-                  })
-                }}
-                onMouseEnter={() => this.setState({ glitchOnSidebar: true })}
-                onMouseOver={() => this.setState({ glitchOnSidebar: true })}
-                onMouseLeave={() => this.setState({ glitchOnSidebar: false })}
-              >
-                <div style={{ width: '60px', height: '32px' }}>
-                  {this.glitch(svg.sidebar(15), this.state.glitchOnSidebar)}
-                </div>
-              </ClusterValue>
-              <ClusterValue
-                width={60}
-                onClick={() => {
-                  clearTimeout(this.clickTimer)
-                  this.clickTimer = setTimeout(() => {
-                    this.setState({ glitchOnSend: false })
-                    link.send('*:addFrame', 'dappLauncher')
-                    link.send('tray:action', 'setDash', { showing: false })
-                  }, 50)
-                }}
-                onMouseEnter={() => this.setState({ glitchOnSend: true })}
-                onMouseOver={() => this.setState({ glitchOnSend: true })}
-                onMouseLeave={() => this.setState({ glitchOnSend: false })}
-              >
-                <div style={{ width: '60px', height: '32px' }}>
-                  {this.glitch(svg.send(15), this.state.glitchOnSend)}
-                </div>
-              </ClusterValue>
+
             </ClusterRow>
-          </Cluster>
-          <Cluster>
+          </Cluster> */}
+          {/* <Cluster>
             <ClusterRow>
-              {/* <ClusterValue
-                width={60}
-                onClick={() => {
-                  clearTimeout(this.clickTimer)
-                  this.clickTimer = setTimeout(() => {
-                    this.setState({ glitchOnSend: false })
-                  }, 50)
-                  if (accountManagerActive) {
-                    link.send('nav:back', 'panel')
-                  } else {
-                    const crumb = {
-                      view: 'accountManager',
-                      data: {}
-                    }
-                    link.send('nav:forward', 'panel', crumb)
-                  }
-                }}
-                onMouseEnter={() => this.setState({ glitchOnAccounts: true })}
-                onMouseOver={() => this.setState({ glitchOnAccounts: true })}
-                onMouseLeave={() => this.setState({ glitchOnAccounts: false })}
-              >
-                <div style={{ width: '60px', height: '32px' }}>
-                  {this.glitch(svg.accounts(16), this.state.glitchOnAccounts)}
-                </div>
-              </ClusterValue> */}
               <Button
                 id={'accounts'}
                 active={accountManagerActive}
@@ -326,7 +315,7 @@ class Menu extends React.Component {
                 </div>
               </Button>
             </ClusterRow>
-          </Cluster>
+          </Cluster> */}
         </PanelMenu>
       )
     }
@@ -334,3 +323,31 @@ class Menu extends React.Component {
 }
 
 export default Restore.connect(Menu)
+
+{
+  /* <ClusterValue
+                width={60}
+                onClick={() => {
+                  clearTimeout(this.clickTimer)
+                  this.clickTimer = setTimeout(() => {
+                    this.setState({ glitchOnSend: false })
+                  }, 50)
+                  if (accountManagerActive) {
+                    link.send('nav:back', 'panel')
+                  } else {
+                    const crumb = {
+                      view: 'accountManager',
+                      data: {}
+                    }
+                    link.send('nav:forward', 'panel', crumb)
+                  }
+                }}
+                onMouseEnter={() => this.setState({ glitchOnAccounts: true })}
+                onMouseOver={() => this.setState({ glitchOnAccounts: true })}
+                onMouseLeave={() => this.setState({ glitchOnAccounts: false })}
+              >
+                <div style={{ width: '60px', height: '32px' }}>
+                  {this.glitch(svg.accounts(16), this.state.glitchOnAccounts)}
+                </div>
+              </ClusterValue> */
+}

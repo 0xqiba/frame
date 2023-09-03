@@ -17,7 +17,6 @@ import Gas from '../../../resources/Components/Monitor'
 import Inventory from './Inventory'
 import Permissions from './Permissions'
 import Requests from './Requests'
-import Settings from './Settings'
 import Signer from './Signer'
 
 // AccountManager
@@ -53,8 +52,7 @@ const modules = {
   inventory: Inventory,
   permissions: Permissions,
   balances: Balances,
-  signer: Signer,
-  settings: Settings
+  signer: Signer
 }
 
 class _AccountModule extends React.Component {
@@ -334,14 +332,15 @@ const AccountMain = (props) => {
 
   return (
     <div className='accountMain' style={{ bottom: `${footerHeight}px` }}>
+      <div className='accountMainFade' />
       <div
         className='accountMainScroll'
         onScroll={(e) => {
           setScrollTrigger(e)
         }}
       >
-        {renderAccountFilter()}
         <div className='accountMainSlide' style={{ height: `${slideHeight}px` }}>
+          {renderAccountFilter()}
           {modules}
         </div>
       </div>

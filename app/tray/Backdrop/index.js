@@ -8,8 +8,9 @@ class Backdrop extends React.Component {
     const bottom = footerHeight + 'px'
     return (
       <>
-        <div className={'overlay'} style={{ top, bottom }} />
-        <div className={'backdrop'} style={{ top, bottom }} />
+        {/* <div className={'overlay'} style={{ top, bottom }} />
+        <div className={'backdrop'} style={{ top, bottom }} /> */}
+        {/* <div className={'card'} /> */}
       </>
     )
   }

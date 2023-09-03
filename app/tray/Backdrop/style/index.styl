@@ -1,5 +1,20 @@
+.card
+  position absolute
+  top 48px
+  right 0px
+  left 0px
+  bottom 0px
+  z-index -1
+  pointer-events none
+  transition var(--standard)
+  background var(--ghostZ)
+  border-top-right-radius 16px
+  border-top-left-radius 16px
+  // display none
+
 .backdrop
   position absolute
+  display none
   top 80px
   right 8px
   left 8px
@@ -12,9 +27,10 @@
 
 .overlay
   position absolute
+  display none
   top 80px
-  right 8px
-  left 8px
+  right 0px
+  left 0px
   bottom 40px
   z-index 1000 // top
   pointer-events none

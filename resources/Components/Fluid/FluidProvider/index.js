@@ -74,7 +74,7 @@ export const Fluid = ({ children }) => {
           y: dragCurrentMousePosition.y - dragInitialMousePosition.y
         }
       : { x: 0, y: 0 }
-
+  console.log('movePosition', movePosition)
   if (lastMovePosition.y !== movePosition.y) {
     direction = lastMovePosition.y > movePosition.y ? 'up' : 'down'
   }

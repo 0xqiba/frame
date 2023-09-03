@@ -198,6 +198,41 @@ const surface = {
   unsetCurrentView(frameId: string) {
     store.setCurrentFrameView(frameId, '')
   },
+  createSession(ens: string) {
+    const session = crypto.randomBytes(6).toString('hex')
+    const dappId = hash(ens)
+    const url = `http://${ens}.localhost:8421/?session=${session}`
+
+    server.sessions.add(ens, session)
+
+    return { session, dappId, url }
+  },
+  _open(frameId: string, ens: string) {
+    const session = crypto.randomBytes(6).toString('hex')
+    const dappId = hash(ens)
+    const dapp = store('main.dapps', dappId)
+
+    if (dapp.status === 'ready') {
+      const url = `http://${ens}.localhost:8421/?session=${session}`
+      const view = {
+        id: getId(),
+        ready: false,
+        dappId,
+        ens,
+        url
+      }
+
+      server.sessions.add(ens, session)
+
+      if (store('main.frames', frameId)) {
+        store.addFrameView(frameId, view)
+      } else {
+        log.warn(`Attempted to open frame "${frameId}" for ${ens} but frame does not exist`)
+      }
+    } else {
+      store.updateDapp(dappId, { ens, status: 'initial', openWhenReady: true })
+    }
+  },
   open(frameId: string, ens: string) {
     const session = crypto.randomBytes(6).toString('hex')
     const dappId = hash(ens)
